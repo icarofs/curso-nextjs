@@ -1,5 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
+import { Titlte } from "../../../styles/pages/Home";
 
 interface IProduct {
   id: string;
@@ -13,11 +14,15 @@ interface CategoryProps {
 export default function Category({ products }: CategoryProps) {
   const router = useRouter();
 
+  if (router.isFallback) {
+    return <p>Carregando...</p>;
+  }
+
   return (
     <>
       <div>
         <section>
-          <h1>{router.query.slug}</h1>
+          <Titlte>{router.query.slug}</Titlte>
 
           <ul>
             {products.map((product) => {
@@ -42,7 +47,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 };
 
